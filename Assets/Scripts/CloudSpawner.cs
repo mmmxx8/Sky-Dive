@@ -21,7 +21,6 @@ public class CloudSpawner : MonoBehaviour
     private void Update()
     {
         timePasased += Time.deltaTime;
-        Debug.Log(timePasased);
     }
     public void SpawnClouds(LevelManager.LevelDifficulty difficulty)
     {
