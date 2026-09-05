@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
             mainMenu.gameObject.SetActive(true);
             start.onClick.AddListener(() =>LoadLevel(1));
         }
+        
     }
 
     private void Update()
@@ -32,8 +34,39 @@ public class GameManager : MonoBehaviour
         speed -= 20;
     }
 
-    void LoadLevel(int level)
+    public void LoadMainMenu()
+    {
+        PauseGame();
+        mainMenu.gameObject.SetActive(true);
+    }
+    private void LoadLevel(int level)
     {
         cloudSpawner.SpawnClouds(levelManager.GetLevelDifficulty(level));
+    }
+    public void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+    public void ResumeGame()
+    {
+        Time.timeScale = 1f;
+    }
+    public void ResetData()
+    {
+        speed = 200;
+        GameObject[] clouds = FindClouds();
+        foreach(GameObject cloud in clouds)
+        {
+            Destroy(cloud);
+        }
+    }
+    private GameObject[] FindClouds()
+    {
+        GameObject[] clouds; //TODO: make it a list
+        GameObject[] normalClouds = GameObject.FindGameObjectsWithTag("NormalCloud");
+        //find dense
+        //find chemical
+        //find storm
+        return normalClouds;
     }
 }

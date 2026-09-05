@@ -75,7 +75,7 @@ public class CloudSpawner : MonoBehaviour
         if (clouds.Count > 0)
         {
             float xSpawn = Random.Range(screenLeftEdge, screenRightEdge);
-            Vector3 spawnPosition = new Vector3(xSpawn, -6, 0);
+            Vector3 spawnPosition = new(xSpawn, -6, 0);
             GameObject cloud = clouds[Random.Range(0, clouds.Count)];
             Instantiate(cloud, spawnPosition, Quaternion.identity);
         }

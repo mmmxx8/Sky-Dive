@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7366876744871052006
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8593390549965789197}
+  - component: {fileID: 8028603778257542304}
+  m_Layer: 0
+  m_Name: CloudSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8593390549965789197
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7366876744871052006}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.52741003, y: 4.08854, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8028603778257542304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7366876744871052006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 117b672fde4201d4b8d6f466555fb175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CloudSpawner
+  normalClouds:
+  - {fileID: 1396110396735178494, guid: f831d6b6d34083245b64db1f27567de3, type: 3}
+  - {fileID: 1396110396735178494, guid: 9e9066bbd3e6da94cb03d0394f3af14c, type: 3}
+  - {fileID: 1396110396735178494, guid: 4f146caa8a206dc4cb3d7313897896d1, type: 3}
+  - {fileID: 1396110396735178494, guid: acebea43d85ab624fa55e18d0b157123, type: 3}
+  - {fileID: 1396110396735178494, guid: e765085f70c39e64fb2e3ddc78614fd0, type: 3}
+  denseClouds:
+  - {fileID: 1396110396735178494, guid: f831d6b6d34083245b64db1f27567de3, type: 3}
+  chemicalClouds:
+  - {fileID: 1396110396735178494, guid: 9e9066bbd3e6da94cb03d0394f3af14c, type: 3}
+  stormClouds:
+  - {fileID: 1396110396735178494, guid: 4f146caa8a206dc4cb3d7313897896d1, type: 3}

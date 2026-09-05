@@ -9,21 +9,33 @@ public class PlayerMovement : MonoBehaviour
     //int screenWidth = Screen.width;
     public static PlayerMovement Instance { get; private set; }
 
-    [SerializeField] Sprite onHit;
+    //[SerializeField] Sprite onHit;
     Sprite original;
     float screenLeftEdge;
     float screenRightEdge;
     [SerializeField] float forceOnClick;
     Collider2D playerCollider;
+    [SerializeField] AvatarPreferences avatarPreferences;
     public event EventHandler OnNormalCloudHit;
     private void Awake()
     {
-        original = gameObject.GetComponent<SpriteRenderer>().sprite;
+        gameObject.GetComponent<SpriteRenderer>().sprite = avatarPreferences.GetAvatar();
+        //original = gameObject.GetComponent<SpriteRenderer>().sprite;
         screenLeftEdge = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
         screenRightEdge = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
         playerCollider = GetComponent<Collider2D>();
         Instance = this;
     }
+    private void Start()
+    {
+        avatarPreferences.OnAvatarRefresh += AvatarPreferences_OnAvatarRefresh;
+    }
+
+    private void AvatarPreferences_OnAvatarRefresh(object sender, EventArgs e)
+    {
+        gameObject.GetComponent<SpriteRenderer>().sprite = avatarPreferences.GetAvatar();
+    }
+
     void Update()
     {
 
@@ -63,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        gameObject.GetComponent<SpriteRenderer>().sprite = onHit;
+        gameObject.GetComponent<SpriteRenderer>().sprite = avatarPreferences.GetAvatarOnCollision();
         if (collision.CompareTag("NormalCloud"))
         {
             OnNormalCloudHit?.Invoke(this, EventArgs.Empty);
@@ -72,6 +84,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        gameObject.GetComponent<SpriteRenderer>().sprite = original;
+        gameObject.GetComponent<SpriteRenderer>().sprite = avatarPreferences.GetAvatar();
     }
 }
