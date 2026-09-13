@@ -10,21 +10,30 @@ public class CloudSpawner : MonoBehaviour
     [SerializeField] private List<GameObject> denseClouds;
     [SerializeField] private List<GameObject> chemicalClouds;
     [SerializeField] private List<GameObject> stormClouds;
+    public static CloudSpawner Instance { get; private set; }
     float screenLeftEdge;
     float screenRightEdge;
-    float timePasased=0;
+    float timePassed = 0;
+    float currentSpawnSpeed;
+    float speedUp;
+    bool firstSpeedUp = true;
+    bool secondSpeedUp = true;
+    public event EventHandler OnSpeedUp;
+    public event EventHandler OnDurationOver;
     private void Awake()
     {
         screenLeftEdge = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x;
         screenRightEdge = Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x;
+        Instance = this;
     }
     private void Update()
     {
-        timePasased += Time.deltaTime;
+        timePassed += Time.deltaTime;
     }
     public void SpawnClouds(LevelManager.LevelDifficulty difficulty)
     {
-
+        currentSpawnSpeed = difficulty.startingCloudSpeed;
+        speedUp = difficulty.levelDuration / 3;
         StartCoroutine(WaitAndSpawn(difficulty));
     }
 
@@ -37,9 +46,21 @@ public class CloudSpawner : MonoBehaviour
             yield return new WaitForSeconds(spawnTime);
             SpawnCloud(difficulty);
 
-            if (timePasased > difficulty.levelDuration)
+            if ((timePassed - speedUp >= 0.5f) && firstSpeedUp)
             {
-                //level done
+                OnSpeedUp?.Invoke(this, EventArgs.Empty);
+                firstSpeedUp = false;
+                currentSpawnSpeed *= 1.1f;
+            }
+            if ((timePassed - (speedUp * 2) >= 0.5f) && secondSpeedUp)
+            {
+                OnSpeedUp?.Invoke(this, EventArgs.Empty);
+                secondSpeedUp = false;
+                currentSpawnSpeed *= 1.2f;
+            }
+            if (timePassed > difficulty.levelDuration)
+            {
+                OnDurationOver?.Invoke(this, EventArgs.Empty);
                 break;
             }
         }
@@ -77,8 +98,15 @@ public class CloudSpawner : MonoBehaviour
             float xSpawn = Random.Range(screenLeftEdge, screenRightEdge);
             Vector3 spawnPosition = new(xSpawn, -6, 0);
             GameObject cloud = clouds[Random.Range(0, clouds.Count)];
-            Instantiate(cloud, spawnPosition, Quaternion.identity);
+            cloud = Instantiate(cloud, spawnPosition, Quaternion.identity);
+            cloud.GetComponent<ObstacleMovement>().Init(currentSpawnSpeed);
         }
 
+    }
+    public void ResetData()
+    {
+        timePassed = 0;
+        firstSpeedUp = true;
+        secondSpeedUp = true;
     }
 }

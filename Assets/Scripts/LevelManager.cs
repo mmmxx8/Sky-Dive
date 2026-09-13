@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour
         public float minSpawnInterval;
         public float maxSpawnInterval;
         public float levelDuration;
+        public float startingCloudSpeed;
     }
     public LevelDifficulty GetLevelDifficulty(int level)
     {
